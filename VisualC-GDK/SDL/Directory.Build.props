@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <GDKCrossPlatform>true</GDKCrossPlatform>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKCoreLatest)</GDKCrossPlatformPath>
+    <GDKCrossPlatformPath Condition="'$(GDKCrossPlatformPath)'==''">$(GameDKXboxLatest)</GDKCrossPlatformPath>
+    <AllExtensionLibs>Appnotify.lib;winhttp.lib;crypt32.lib;libHttpClient.lib;XCurl.lib</AllExtensionLibs>
+    <AllExtensionLibs Condition="'$(Configuration)'=='Debug'">Microsoft.Xbox.Services.142.C.Debug.lib;$(AllExtensionLibs)</AllExtensionLibs>
+    <AllExtensionLibs Condition="'$(Configuration)'!='Debug'">Microsoft.Xbox.Services.142.C.lib;$(AllExtensionLibs)</AllExtensionLibs>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Desktop.x64'">
+    <Link>
+      <AdditionalDependencies>$(AllExtensionLibs);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!--
+    We use XboxExtensionsDependencies because of a hack in our Gaming.Xbox.*.x64 platforms which forces
+    AdditionalDependencies to xgameplatform.lib, but means we can't use AdditionalDependencies this early.
+  -->
+
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64' OR '$(Platform)'=='Gaming.Xbox.XboxOne.x64'">
+    <Link>
+      <XboxExtensionsDependencies>$(AllExtensionLibs);%(XboxExtensionsDependencies)</XboxExtensionsDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+</Project>
