@@ -157,7 +157,7 @@ SDL_Storage *SDL_OpenUserStorage(const char *org, const char *app, SDL_Propertie
     } else {
         for (i = 0; userbootstrap[i]; ++i) {
             storage = userbootstrap[i]->create(org, app, props);
-            if (storage) {
+            if (storage || SDL_strlen(SDL_GetError()) != 0) {
                 break;
             }
         }
@@ -168,7 +168,9 @@ SDL_Storage *SDL_OpenUserStorage(const char *org, const char *app, SDL_Propertie
         if (driver_name) {
             SDL_SetError("%s not available", driver_name);
         } else {
-            SDL_SetError("No available user storage driver");
+            if (SDL_strlen(SDL_GetError()) == 0) {
+                SDL_SetError("No available user storage driver");
+            }
         }
     }
     return storage;
