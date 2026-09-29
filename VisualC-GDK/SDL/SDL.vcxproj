@@ -107,7 +107,7 @@
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='Gaming.Xbox.Scarlett.x64'">
-    <LinkIncremental Condition="'$(Configuration)'=='Debug'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
     <ExecutablePath>$(Console_SdkRoot)bin;$(Console_SdkToolPath);$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(ProjectDir)../../src;$(Console_SdkIncludeRoot)</IncludePath>
     <ReferencePath>$(Console_SdkLibPath);$(Console_SdkWindowsMetadataPath)</ReferencePath>
