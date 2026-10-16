@@ -103,6 +103,11 @@ bool GDK_RegisterChangeNotifications(void)
     // Register constrain/unconstrain handling
     auto raccn = [](BOOLEAN constrained, PVOID context) {
         SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION, "[GDK] in RegisterAppConstrainedChangeNotification handler");
+        if (constrained) {
+            SDL_SendAppEvent(SDL_EVENT_WILL_ENTER_BACKGROUND);
+        } else {
+            SDL_SendAppEvent(SDL_EVENT_DID_ENTER_FOREGROUND);
+        }
         SDL_VideoDevice *_this = SDL_GetVideoDevice();
         if (_this) {
             if (constrained && !((_this->windows) && _this->windows->text_input_active)) {

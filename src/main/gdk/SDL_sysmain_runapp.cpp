@@ -34,6 +34,9 @@ extern "C" {
 extern "C"
 int SDL_RunApp(int argc, char **argv, SDL_main_func mainFunction, void *reserved)
 {
+#ifndef SDL_MAIN
+    return 0;
+#else
     (void)reserved;
 
     void *heap_allocated = NULL;
@@ -101,5 +104,6 @@ int SDL_RunApp(int argc, char **argv, SDL_main_func mainFunction, void *reserved
     }
 
     return result;
+#endif
 }
 
